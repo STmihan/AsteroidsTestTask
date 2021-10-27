@@ -1,30 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using Settings;
 using UI;
 using Units;
 using UnityEngine;
-using static Assets.SOAssets;
 using Random = UnityEngine.Random;
 
 namespace Scene
 {
-    public struct SceneBorders
-    {
-        public Vector2 TopBorder, RightBorder;
-
-        public SceneBorders(Vector2 topBorder, Vector2 rightBorder)
-        {
-            TopBorder = topBorder;
-            RightBorder = rightBorder;
-        }
-
-        public void InflateBorders(float arg)
-        {
-            TopBorder += new Vector2(0, arg);
-            RightBorder += new Vector2(arg, 0);
-        }
-    }
-    
-    [RequireComponent(typeof(BoxCollider2D))]
     public class SceneSetter : MonoBehaviour
     {
         
@@ -37,40 +20,44 @@ namespace Scene
         [SerializeField] private ScoreUI _scoreUI;
         [SerializeField] private EndScreenUI _endScreenUI;
 
-        private BoxCollider2D _sceneBorders;
+        [Space] 
+        [SerializeField] private Assets.Assets _assets;
+        [SerializeField] private GameSettings _settings;
+        
+        private SceneBorders _borders;
         
         private void Start()
         {
-            _sceneBorders = GetComponent<BoxCollider2D>();
             SetScene();
             SetBackground();
             SetPlayer();
             SetUI();
             StartCoroutine(SetAsteroids());
+            _player.ScoreUp += () =>
+            {
+                var b = new SceneBorders();
+                Vector2 v = new Vector2(b.Border.x, b.Border.y);
+                SpawnAsteroid(v);
+            };
         }
 
         private void SetScene()
         {
             Camera cum = Camera.allCameras[0];
-            var sceneBorders = new SceneBorders(
-                 cum.ScreenToWorldPoint(new Vector2(Screen.width/2f, Screen.height)),
-                 cum.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height/2f))
-            );
-            sceneBorders.InflateBorders(1f); // Магическое число для раздувания границ
-            _sceneBorders.size = new Vector2(sceneBorders.RightBorder.x * 2, sceneBorders.TopBorder.y * 2);
+            _borders = new SceneBorders();
         }
 
         private void SetBackground()
         {
-            Sprite bg = SO.assets.backgrounds[Random.Range(0, SO.assets.backgrounds.Length)];
+            Sprite bg = _assets.backgrounds[Random.Range(0, _assets.backgrounds.Length)];
 
             Vector2Int sceneBordersX = new Vector2Int(
-                Mathf.FloorToInt(_sceneBorders.bounds.min.x),
-                Mathf.CeilToInt(_sceneBorders.bounds.max.x)
+                Mathf.FloorToInt(-_borders.InflatedBorders().x),
+                Mathf.CeilToInt(_borders.InflatedBorders().x)
                 );
             Vector2Int sceneBordersY = new Vector2Int(
-                Mathf.FloorToInt(_sceneBorders.bounds.min.y),
-                Mathf.CeilToInt(_sceneBorders.bounds.max.y)
+                Mathf.FloorToInt(-_borders.InflatedBorders().y),
+                Mathf.CeilToInt(_borders.InflatedBorders().y)
             );
             
             for (int x = sceneBordersX.x; x < sceneBordersX.y; x++)
@@ -88,10 +75,13 @@ namespace Scene
         {
             _player = Instantiate(_player);
             _player.transform.position = Vector2.zero;
+            _player.Borders = _borders;
+            _player.SetSettings(_settings);
         }
 
         private void SetUI()
         {
+            _skinSelectorUI.SetSprites(_assets.playerShips);
             _skinSelectorUI.SetPlayer(_player);
             _skinSelectorUI.Init();
             
@@ -105,21 +95,41 @@ namespace Scene
         private IEnumerator SetAsteroids()
         {
             while (!_player.CanBeControl) yield return null;
-            for (int i = 0; i < SO.settings.asteroidsOnStart; i++)
+            for (int i = 0; i < _settings.asteroidsCount; i++)
             {
-                var go = new GameObject("Asteroid");
-                var asteroid = go.AddComponent<Asteroid>();
-                asteroid.Type = (AsteroidType) Random.Range(0, 2);
-                var bounds = _sceneBorders.bounds;
-                var pos = RandomSpawn();
-                if (pos.x > -3f && pos.x < 3f) RandomSpawn();
-                if (pos.y > -2f && pos.y < 2f) RandomSpawn();
-                asteroid.transform.position = pos;
-
-                Vector2 RandomSpawn() => new Vector2(
-                        Random.Range(bounds.min.x, bounds.max.x),
-                        Random.Range(bounds.min.y, bounds.max.y));
+                SpawnAsteroid(new Vector2(3,2));
             }
+        }
+
+        private Asteroid SpawnAsteroid(Vector2 boxBounds)
+        {
+            var go = new GameObject("Asteroid");
+            var asteroid = go.AddComponent<Asteroid>();
+            var bounds = _borders.Border;
+            asteroid.transform.position = RandomSpawn();
+            asteroid.Borders = _borders;
+            asteroid.Speed = _settings.asteroidsSpeed;
+            asteroid.SetSprite(_assets.asteroids[Random.Range(0,_assets.asteroids.Length)]);
+            asteroid.gameObject.AddComponent<PolygonCollider2D>().isTrigger = true;
+            asteroid.Player = _player;
+
+
+            Vector2 RandomSpawn()
+            {
+                var finalBound = new Vector2(
+                    Random.Range(boxBounds.x, bounds.x),
+                    Random.Range(boxBounds.y, bounds.y));
+                return Random.Range(0,4) switch
+                {
+                    0 => finalBound,
+                    1 => new Vector2(-finalBound.x, finalBound.y),
+                    2 => new Vector2(finalBound.x, -finalBound.y),
+                    3 => new Vector2(-finalBound.x, -finalBound.y),
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+
+            return asteroid;
         }
     }
 }

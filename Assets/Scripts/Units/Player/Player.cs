@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections;
+using Scene;
+using Settings;
 using UnityEngine;
-using static Assets.SOAssets;
 
 namespace Units
 {
@@ -28,27 +29,43 @@ namespace Units
 
         private int _hp;
         private float _speed;
+        private float _bulletSpeed;
         private bool _isTakenHitRecently;
+
+        public SceneBorders Borders { private get; set; }
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _rigidbody;
+
         public void SetPlayerSprite(Sprite sprite) => _spriteRenderer.sprite = sprite;
+        public void SetCollider() => gameObject.AddComponent<PolygonCollider2D>().isTrigger = true;
 
         private void Awake()
         {
+            Score = 0;
             _rigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            
-            var settings = SO.settings;
-            _hp = settings.playerHp;
-            ControlType = settings.playerControlType;
-            _speed = settings.playerSpeed;
 
             OnDeath += () =>
             {
                 CanBeControl = false;
                 Destroy(gameObject);
             };
+
+            ScoreUp += () => ++Score;
+        }
+
+        public void SetSettings(GameSettings settings)
+        {
+            _hp = settings.playerHp;
+            ControlType = settings.playerControlType;
+            _speed = settings.playerSpeed;
+            _bulletSpeed = settings.bulletSpeed;
+        }
+
+        private void Update()
+        {
+            ScreenWrap();
         }
 
         public void TakeHit()
@@ -60,39 +77,27 @@ namespace Units
 
         private IEnumerator TakeHitGfx()
         {
-            var col = GetComponent<PolygonCollider2D>();
-            col.isTrigger = true;
             _isTakenHitRecently = true;
-            _spriteRenderer.color = new Color(1,1,1,0.5f);
-            yield return new WaitForSeconds(0.3f);
-            _spriteRenderer.color = new Color(1,1,1,1);
-            yield return new WaitForSeconds(0.3f);
-            _spriteRenderer.color = new Color(1,1,1,0.5f);
-            yield return new WaitForSeconds(0.3f);
-            _spriteRenderer.color = new Color(1,1,1,1);
+            for (int i = 0; i < 2; i++)
+            {
+                _spriteRenderer.color = new Color(1,1,1,0.5f);
+                yield return new WaitForSeconds(0.3f);
+                _spriteRenderer.color = new Color(1,1,1,1);
+                yield return new WaitForSeconds(0.2f);
+            }
             _isTakenHitRecently = false;
-            col.isTrigger = false;
-
         }
         
-        // Долго думал над тем какое управление будет удобно,
-        // чтобы всегда W вело корабль вверх, а остальные клавиши
-        // в свои стороны, или же чтобы w вело корабль в сторону, в которую он смотрит,
-        // ну и остальные кнопки тоже передвигали корабль относительно его локальных координат.
-        // Я в итоге выбрал второй метод, но если что, то в комментариях оставляю вариант с
-        // передвижением, относительно глобальной системы координат.
         public void Move(Vector2 input)
         {
             if(!CanBeControl) return;
             transform.Translate(input * _speed * Time.fixedDeltaTime);
-            //_rigidbody.MovePosition(_rigidbody.position + input * _speed * Time.fixedDeltaTime); 
         }
 
         public void MovePhysics(Vector2 input)
         {
             if(!CanBeControl) return;
             _rigidbody.AddRelativeForce(input * _speed);
-            // _rigidbody.AddForce(input * _speed);
         }
 
         public void Rotate(Vector2 input)
@@ -111,12 +116,18 @@ namespace Units
             Vector2 direction = (Vector2)_firePoint.position - (Vector2)transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             bullet.transform.rotation = Quaternion.Euler(0,0,angle);
-            bullet.Fire();
+            bullet.Fire(_bulletSpeed);
+        }
+        
+        private void ScreenWrap()
+        {
+            Vector2 pos = transform.position;
+            if (transform.position.y > Borders.Border.y) pos.y = -Borders.Border.y;
+            if (transform.position.y < -Borders.Border.y) pos.y = Borders.Border.y;
+            if (transform.position.x > Borders.Border.x) pos.x = -Borders.Border.x;
+            if (transform.position.x < -Borders.Border.x) pos.x = Borders.Border.x;
+            transform.position = pos;
         }
 
-        public void SetCollider()
-        {
-            gameObject.AddComponent<PolygonCollider2D>();
-        }
     }
 }

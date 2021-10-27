@@ -1,7 +1,6 @@
 ﻿using Units;
 using UnityEngine;
 using UnityEngine.UI;
-using static Assets.SOAssets;
 
 namespace UI
 {
@@ -12,27 +11,39 @@ namespace UI
         [SerializeField] private Button _playButton;
 
         private Player _player;
-        private int _skinNumber1;
+        private Sprite[] _skins;
+        private int _skinCounts;
+        private int _skinNumber;
 
-        private int _skinNumber
+
+        public void SetPlayer(Player player) => _player = player;
+
+        public void SetSprites(Sprite[] sprites)
         {
-            get => _skinNumber1;
-            set
-            {
-                if (value > SO.assets.playerShips.Length-1) value = 0;
-                if (value < 0) value = SO.assets.playerShips.Length - 1;
-                _skinNumber1 = value;
-            }
+            _skins = sprites;
+            _skinCounts = sprites.Length;
         }
-
+        
         public void Init()
         {
-            _skinNumber1 = 0;
+            _skinNumber = 0;
             _player.CanBeControl = false;
             
-            _nextButton.onClick.AddListener(() => _player.SetPlayerSprite(SO.assets.playerShips[++_skinNumber]));
-            _prevButton.onClick.AddListener(() => _player.SetPlayerSprite(SO.assets.playerShips[--_skinNumber]));
+            _nextButton.onClick.AddListener(() => _player.SetPlayerSprite(_skins[IncreasedSkinNumber()]));
+            _prevButton.onClick.AddListener(() => _player.SetPlayerSprite(_skins[DecreaseSkinNumber()]));
             _playButton.onClick.AddListener(Play);
+        }
+
+        private int IncreasedSkinNumber()
+        {
+            if (++_skinNumber >= _skinCounts) _skinNumber = 0;
+            return _skinNumber;
+        }
+
+        private int DecreaseSkinNumber()
+        {
+            if (--_skinNumber < 0) _skinNumber = _skinCounts-1;
+            return _skinNumber;
         }
 
         private void Play()
@@ -41,7 +52,5 @@ namespace UI
             _player.CanBeControl = true;
             _player.SetCollider();
         }
-
-        public void SetPlayer(Player player) => _player = player;
     }
 }

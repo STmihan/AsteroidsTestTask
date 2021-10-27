@@ -1001,8 +1001,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b1d534aa434a2080667f487c9ea0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 11400000, guid: c271a107a68530241af7fd74623e7b2d, type: 2}
-  assets: {fileID: 11400000, guid: bae840d6fe1dae54985eb6a2c3b431fc, type: 2}
 --- !u!4 &739009260
 Transform:
   m_ObjectHideFlags: 0
@@ -1192,7 +1190,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1647174564}
   - component: {fileID: 1647174565}
-  - component: {fileID: 1647174566}
   m_Layer: 0
   m_Name: SceneSetter
   m_TagString: Untagged
@@ -1232,32 +1229,8 @@ MonoBehaviour:
   _skinSelectorUI: {fileID: 96500894}
   _scoreUI: {fileID: 12217252}
   _endScreenUI: {fileID: 1907205780}
---- !u!61 &1647174566
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1647174563}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  _assets: {fileID: 11400000, guid: bae840d6fe1dae54985eb6a2c3b431fc, type: 2}
+  _settings: {fileID: 11400000, guid: c271a107a68530241af7fd74623e7b2d, type: 2}
 --- !u!1 &1754521327
 GameObject:
   m_ObjectHideFlags: 0
