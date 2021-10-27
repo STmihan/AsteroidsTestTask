@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Assets.SOAssets;
 using Random = UnityEngine.Random;
 
 namespace Scene
@@ -20,10 +21,9 @@ namespace Scene
         }
     }
     
+    [RequireComponent(typeof(BoxCollider2D))]
     public class SceneSetter : MonoBehaviour
     {
-        [SerializeField] private Assets.Assets _assets;
-        [Space]
         [SerializeField] private Transform _backgroundTiles;
         
         private BoxCollider2D _collider;
@@ -32,7 +32,7 @@ namespace Scene
         {
             _collider = GetComponent<BoxCollider2D>();
             SetScene(_collider);
-            SetBackground(_assets, _collider);
+            SetBackground(SO.assets, _collider);
         }
 
         private void SetScene(BoxCollider2D collider)
@@ -42,7 +42,7 @@ namespace Scene
                  cum.ScreenToWorldPoint(new Vector2(Screen.width/2f, Screen.height)),
                  cum.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height/2f))
             );
-            sceneBorders.InflateBorders(.1f); // Магическое число для раздувания границ
+            sceneBorders.InflateBorders(1f); // Магическое число для раздувания границ
             collider.size = new Vector2(sceneBorders.RightBorder.x * 2, sceneBorders.TopBorder.y * 2);
         }
 
