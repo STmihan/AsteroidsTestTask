@@ -11,6 +11,7 @@ namespace Settings
             "Asteroids spawn rate in seconds. Can be more then 10 and less then 1 (but clamp in 0)," +
             " just write value you need in text field")]
         [Range(10, 1)] public float asteroidsSpawnRate;
+        public float asteroidsSpeed;
 
         [Space]
         public int playerHp;
