@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using static Assets.SOAssets;
 using Random = UnityEngine.Random;
@@ -18,9 +19,12 @@ namespace Units
     {
         public AsteroidType Type { get; set; }
         private Action _onShouldDestroy;
+        private float _speed;
 
         private void Start()
         {
+            _speed = SO.settings.asteroidsSpeed;
+            
             var spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = Type switch
             {
@@ -41,6 +45,7 @@ namespace Units
                     case AsteroidType.Medium:
                     case AsteroidType.Small:
                         SpawnChildrenAsteroid(Type);
+                        SpawnChildrenAsteroid(Type);
                         break;
                     case AsteroidType.Tiny:
                         break;
@@ -55,6 +60,7 @@ namespace Units
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.TryGetComponent(out Player player)) player.TakeHit();
+            StartCoroutine(MoveInRandomDirection());
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -66,10 +72,11 @@ namespace Units
             }
         }
 
-        private void SpawnChildrenAsteroid(AsteroidType type)
+        private Asteroid SpawnChildrenAsteroid(AsteroidType type)
         {
             var go = new GameObject("Asteroid");
             go.transform.position = transform.position;
+                                    // + new Vector3(Random.Range(-0.2f,0.2f), Random.Range(-0.2f,0.2f), transform.position.z);
             
             var asteroid = go.AddComponent<Asteroid>();
             asteroid.Type = type switch
@@ -80,6 +87,17 @@ namespace Units
                 AsteroidType.Tiny => throw new ArgumentOutOfRangeException(),
                 _ => throw new ArgumentOutOfRangeException()
             };
+            return asteroid;
+        }
+
+        private IEnumerator MoveInRandomDirection()
+        {
+            Vector2 direction = new Vector2(Random.Range(-1, 1), Random.Range(-1,1)) - (Vector2)transform.position;
+            while (true)
+            {
+                transform.Translate(direction.normalized * _speed * Time.deltaTime);
+                yield return null;
+            }
         }
     }
 }
