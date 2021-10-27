@@ -1,24 +1,23 @@
 ﻿using System;
 using TMPro;
+using Units;
 using UnityEngine;
 
 namespace UI
 {
-    public class ScoreUI : MonoBehaviour
+    public class ScoreUI : MonoBehaviour, IScreen
     {
-        public Action ScoreUp;
 
         private int _score;
 
         [SerializeField] private TextMeshProUGUI _text;
-
-        private void Awake()
+        
+        private Player _player;
+        public void SetPlayer(Player player) => _player = player;
+        
+        public void Init()
         {
-            ScoreUp += () =>
-            {
-                _score++;
-                _text.SetText(_score.ToString());
-            };
+            _player.ScoreUp += () => _text.SetText(_score.ToString());
         }
     }
 }

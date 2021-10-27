@@ -15,5 +15,7 @@ namespace Settings
         [Space]
         public int playerHp;
         public PlayerControlType playerControlType;
+        public float playerSpeed;
+        public float bulletSpeed;
     }
 }
