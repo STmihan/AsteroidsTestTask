@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: aacb801081c77894a8e8db9ce23a7fcb, type: 3}
   bullet: {fileID: 7673614933897258507, guid: 364661c03a4f8e441a0010323748e46f, type: 3}
   player: {fileID: -1051910552746893235, guid: 6c9b6ee034420e24a80e6f0d94c6d3b1, type: 3}
-  bulletHitVFX: {fileID: 1244848310251715619, guid: 3e70ec7b39aa379418cbebc289041278,
+  bulletHitVFX: {fileID: 2492907325316062191, guid: 3e70ec7b39aa379418cbebc289041278,
     type: 3}
-  playerDestroyVFX: {fileID: 6061233073573262804, guid: 1bd14a494d24ddc40bd1598d0ae32045,
+  playerDestroyVFX: {fileID: 6061233073573262805, guid: 1bd14a494d24ddc40bd1598d0ae32045,
     type: 3}
