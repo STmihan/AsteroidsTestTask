@@ -1,7 +1,7 @@
 ﻿using Units;
 using UnityEngine;
 
-namespace Settings
+namespace SO
 {
     [CreateAssetMenu(fileName = "Settings", menuName = "Settings")]
     public class GameSettings : ScriptableObject
