@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c151088fe6d54d1682dc60ff1ddb7970, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  asteroidsOnStart: 10
+  asteroidsOnStart: 4
+  asteroidsSpawnRate: 10
+  playerHp: 2
+  playerControlType: 0
+  playerSpeed: 2
+  bulletSpeed: 2

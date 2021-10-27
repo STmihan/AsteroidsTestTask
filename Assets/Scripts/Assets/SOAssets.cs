@@ -11,9 +11,6 @@ namespace Assets
         public GameSettings settings;
         public Assets assets;
 
-        private void Awake()
-        {
-            SO = this;
-        }
+        private void Awake() => SO = this;
     }
 }

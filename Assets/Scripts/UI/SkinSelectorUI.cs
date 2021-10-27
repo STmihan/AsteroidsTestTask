@@ -5,7 +5,7 @@ using static Assets.SOAssets;
 
 namespace UI
 {
-    public class SkinSelector : MonoBehaviour
+    public class SkinSelectorUI : MonoBehaviour, IScreen
     {
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _prevButton;
@@ -25,10 +25,11 @@ namespace UI
             }
         }
 
-        private void Awake()
+        public void Init()
         {
             _skinNumber1 = 0;
-            _player = FindObjectOfType<Player>();
+            _player.CanBeControl = false;
+            
             _nextButton.onClick.AddListener(() => _player.SetPlayerSprite(SO.assets.playerShips[++_skinNumber]));
             _prevButton.onClick.AddListener(() => _player.SetPlayerSprite(SO.assets.playerShips[--_skinNumber]));
             _playButton.onClick.AddListener(Play);
@@ -36,7 +37,11 @@ namespace UI
 
         private void Play()
         {
-            print("Playing!");
+            gameObject.SetActive(false);
+            _player.CanBeControl = true;
+            _player.SetCollider();
         }
+
+        public void SetPlayer(Player player) => _player = player;
     }
 }
