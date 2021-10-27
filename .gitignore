@@ -1,12 +1,10 @@
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/Assets/AssetStoreTools*
-/[Uu]serSettings/
-/[Ll]ogs
-/.idea
+java-developer-test-dunaev/[Ll]ibrary/
+java-developer-test-dunaev/[Tt]emp/
+java-developer-test-dunaev/[Oo]bj/
+java-developer-test-dunaev/Assets/AssetStoreTools*
+java-developer-test-dunaev/[Uu]serSettings/
+java-developer-test-dunaev/[Ll]ogs
+java-developer-test-dunaev/.idea
 
 
 # Visual Studio 2015 cache directory

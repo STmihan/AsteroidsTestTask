@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9de4b1911144ad3a225d93a1ecc187b, type: 3}
+  m_Name: Game Assets
+  m_EditorClassIdentifier: 
+  backgrounds:
+  - {fileID: 21300000, guid: 298fd2a49b9ab8646b0f42b8db7ea2bd, type: 3}
+  - {fileID: 21300000, guid: dfda9335cae5d1d41b729f671638ae89, type: 3}
+  - {fileID: 21300000, guid: eac0af8ad61a53546a021f3d4752344c, type: 3}
+  - {fileID: 21300000, guid: dd3d43e75fa18524abfdc3921c38a63e, type: 3}
+  playerShips:
+  - {fileID: 21300000, guid: a9f4329acaad09e4c8dd3a2793fc83c0, type: 3}
+  - {fileID: 21300000, guid: 840fb3adc147cac4282f1ec297157b28, type: 3}
+  - {fileID: 21300000, guid: db8a2ab1aa05688409c606a066c35848, type: 3}
+  - {fileID: 21300000, guid: 4aa7299af83052d4d8c6d144b9fe56b7, type: 3}
+  - {fileID: 21300000, guid: fbb1be556e4183f4c8b9adb0943c7393, type: 3}
+  - {fileID: 21300000, guid: 3f9e8bc1807c8f24d96070a4ce936b36, type: 3}
+  - {fileID: 21300000, guid: 54b2b83c99d29f64291b266ddd064071, type: 3}
+  - {fileID: 21300000, guid: 74574684cf691ce46828069dd49553dd, type: 3}
+  - {fileID: 21300000, guid: 6abc65f473a2075469c78cd6d9b7fb68, type: 3}
+  - {fileID: 21300000, guid: ecb56e8ec1cbcfd409a7c5c9674fbc2f, type: 3}
+  - {fileID: 21300000, guid: a2d17e9f11fbecc43a8cb45613aa09d8, type: 3}
+  - {fileID: 21300000, guid: 4df028ac877e3bd4cbed7def179278d6, type: 3}
+  asteroids:
+  - {fileID: 21300000, guid: 2249ed2390acea24795ff4222ae1ce9f, type: 3}
+  - {fileID: 21300000, guid: 593f58c9941d3a64986e9d56dbfc3937, type: 3}
+  - {fileID: 21300000, guid: 08d576816f74b0845bd40e2e653e296a, type: 3}
+  - {fileID: 21300000, guid: 74fb305523ab7b14f9891c1312716c66, type: 3}
+  - {fileID: 21300000, guid: 6f5a6644de8f3cc48aead1026bab2fc8, type: 3}
+  - {fileID: 21300000, guid: f75c488741b903743babd925bbef2014, type: 3}
+  - {fileID: 21300000, guid: 095b9a9c459a0de43993b72e2280af5e, type: 3}
+  - {fileID: 21300000, guid: 72a0f7ec4f2b20b4fa019ee19c41a706, type: 3}
+  - {fileID: 21300000, guid: 9bf2f3abb6b093b4baf37b9574610c79, type: 3}
+  - {fileID: 21300000, guid: 31c3006f8d86833479824c57f1392a0c, type: 3}
+  - {fileID: 21300000, guid: dfd58e6fd85d28b4388da618e73fa275, type: 3}
+  - {fileID: 21300000, guid: 6eba822d81c3b85448df3e5e5cf28418, type: 3}
+  - {fileID: 21300000, guid: 8a8f3b92673c9794ca9e62590b11c834, type: 3}
+  - {fileID: 21300000, guid: 64bf46ddc2e35e544a1ba04390ee221f, type: 3}
+  - {fileID: 21300000, guid: c59252e6ebcdc1e459a5109fb7129904, type: 3}
+  - {fileID: 21300000, guid: c2634cddeb798f246b444060daf2ba25, type: 3}
+  - {fileID: 21300000, guid: 9627c551de1759c469162c7034b1ab0b, type: 3}
+  - {fileID: 21300000, guid: b1d12228c6303a642afb87a9ef813358, type: 3}
+  - {fileID: 21300000, guid: 0c3cbad090558d948ae1413c4c54c9fb, type: 3}
+  - {fileID: 21300000, guid: aacb801081c77894a8e8db9ce23a7fcb, type: 3}
+  bullet: {fileID: 7673614933897258507, guid: 364661c03a4f8e441a0010323748e46f, type: 3}
+  player: {fileID: -1051910552746893235, guid: 6c9b6ee034420e24a80e6f0d94c6d3b1, type: 3}
+  bulletHitVFX: {fileID: 2492907325316062191, guid: 3e70ec7b39aa379418cbebc289041278,
+    type: 3}
+  playerDestroyVFX: {fileID: 6061233073573262805, guid: 1bd14a494d24ddc40bd1598d0ae32045,
+    type: 3}
