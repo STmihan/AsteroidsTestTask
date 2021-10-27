@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Units;
+using UnityEngine;
 
-namespace Assets
+namespace SO
 {
     [CreateAssetMenu(fileName = "Game Assets", menuName = "Game Assets")]
     public class Assets : ScriptableObject
@@ -8,5 +9,11 @@ namespace Assets
         public Sprite[] backgrounds;
         public Sprite[] playerShips;
         public Sprite[] asteroids;
+        [Header("Prefab")] 
+        public Bullet bullet;
+        public Player player;
+        [Header("VFX")] 
+        public VFX bulletHitVFX;
+        public VFX playerDestroyVFX;
     }
 }

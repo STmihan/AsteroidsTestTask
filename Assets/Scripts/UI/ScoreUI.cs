@@ -1,5 +1,4 @@
-﻿using Settings;
-using TMPro;
+﻿using TMPro;
 using Units;
 using UnityEngine;
 

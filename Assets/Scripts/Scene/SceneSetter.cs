@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using Settings;
+using SO;
 using UI;
 using Units;
 using UnityEngine;
@@ -11,8 +11,8 @@ namespace Scene
     public class SceneSetter : MonoBehaviour
     {
         
-        [SerializeField] private Transform _backgroundTilesParent;
-        [SerializeField] private Player _player;
+        [SerializeField] private Transform _backgroundTilesParent; 
+        private Player _player;
 
         [Space]
         
@@ -21,13 +21,14 @@ namespace Scene
         [SerializeField] private EndScreenUI _endScreenUI;
 
         [Space] 
-        [SerializeField] private Assets.Assets _assets;
+        [SerializeField] private Assets _assets;
         [SerializeField] private GameSettings _settings;
         
         private SceneBorders _borders;
         
         private void Start()
         {
+            _player = _assets.player;
             SetScene();
             SetBackground();
             SetPlayer();
@@ -76,6 +77,8 @@ namespace Scene
             _player = Instantiate(_player);
             _player.transform.position = Vector2.zero;
             _player.Borders = _borders;
+            _player.SetBullet(_assets.bullet);
+            _player.SetVFX(_assets.bulletHitVFX, _assets.playerDestroyVFX);
             _player.SetSettings(_settings);
         }
 

@@ -1224,8 +1224,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backgroundTilesParent: {fileID: 1569789091}
-  _player: {fileID: -1051910552746893235, guid: 6c9b6ee034420e24a80e6f0d94c6d3b1,
-    type: 3}
   _skinSelectorUI: {fileID: 96500894}
   _scoreUI: {fileID: 12217252}
   _endScreenUI: {fileID: 1907205780}

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Scene;
-using Settings;
+using SO;
 using UnityEngine;
 
 namespace Units
@@ -16,7 +16,6 @@ namespace Units
     [RequireComponent(typeof(SpriteRenderer))]
     public class Player : MonoBehaviour
     {
-        [SerializeField] private Bullet _bullet;
         [SerializeField] private Transform _firePoint;
         
         public bool CanBeControl { get; set; }
@@ -31,6 +30,10 @@ namespace Units
         private float _speed;
         private float _bulletSpeed;
         private bool _isTakenHitRecently;
+        
+        private Bullet _bullet;
+        private VFX _bulletVFX;
+        private VFX _playerDeathVFX;
 
         public SceneBorders Borders { private get; set; }
 
@@ -39,6 +42,16 @@ namespace Units
 
         public void SetPlayerSprite(Sprite sprite) => _spriteRenderer.sprite = sprite;
         public void SetCollider() => gameObject.AddComponent<PolygonCollider2D>().isTrigger = true;
+        public void SetBullet(Bullet bullet)
+        {
+            _bullet = bullet;
+        }
+
+        public void SetVFX(VFX bulletVfx, VFX playerDeathVfx)
+        {
+            _bulletVFX = bulletVfx;
+            _playerDeathVFX = playerDeathVfx;
+        }
 
         private void Awake()
         {
@@ -49,6 +62,7 @@ namespace Units
             OnDeath += () =>
             {
                 CanBeControl = false;
+                Instantiate(_playerDeathVFX, transform.position, transform.rotation);
                 Destroy(gameObject);
             };
 
@@ -116,7 +130,7 @@ namespace Units
             Vector2 direction = (Vector2)_firePoint.position - (Vector2)transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             bullet.transform.rotation = Quaternion.Euler(0,0,angle);
-            bullet.Fire(_bulletSpeed);
+            bullet.Fire(_bulletSpeed, _bulletVFX);
         }
         
         private void ScreenWrap()
