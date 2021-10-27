@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using static Assets.SOAssets;
 
 namespace Units
 {
     public class Bullet : MonoBehaviour
     {
-        private float _bulletSpeed;
-        public void Fire()
+        private float _speed;
+        public void Fire(float bulletSpeed)
         {
-            _bulletSpeed = SO.settings.bulletSpeed;
+            _speed = bulletSpeed;
             StartCoroutine(MoveRoutine());
             Destroy(gameObject, 2f);
         }
@@ -19,7 +17,7 @@ namespace Units
         {
             while (true)
             {
-                transform.Translate(Vector2.up * _bulletSpeed * Time.deltaTime);
+                transform.Translate(Vector2.up * _speed * Time.deltaTime);
                 yield return null;
             }
         }

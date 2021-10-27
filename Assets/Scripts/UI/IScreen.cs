@@ -1,4 +1,6 @@
-﻿namespace UI
+﻿using Settings;
+
+namespace UI
 {
     public interface IScreen
     {

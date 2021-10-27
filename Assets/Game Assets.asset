@@ -30,27 +30,24 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ecb56e8ec1cbcfd409a7c5c9674fbc2f, type: 3}
   - {fileID: 21300000, guid: a2d17e9f11fbecc43a8cb45613aa09d8, type: 3}
   - {fileID: 21300000, guid: 4df028ac877e3bd4cbed7def179278d6, type: 3}
-  bigAsteroids:
+  asteroids:
   - {fileID: 21300000, guid: 2249ed2390acea24795ff4222ae1ce9f, type: 3}
   - {fileID: 21300000, guid: 593f58c9941d3a64986e9d56dbfc3937, type: 3}
   - {fileID: 21300000, guid: 08d576816f74b0845bd40e2e653e296a, type: 3}
   - {fileID: 21300000, guid: 74fb305523ab7b14f9891c1312716c66, type: 3}
+  - {fileID: 21300000, guid: 6f5a6644de8f3cc48aead1026bab2fc8, type: 3}
+  - {fileID: 21300000, guid: f75c488741b903743babd925bbef2014, type: 3}
+  - {fileID: 21300000, guid: 095b9a9c459a0de43993b72e2280af5e, type: 3}
+  - {fileID: 21300000, guid: 72a0f7ec4f2b20b4fa019ee19c41a706, type: 3}
+  - {fileID: 21300000, guid: 9bf2f3abb6b093b4baf37b9574610c79, type: 3}
+  - {fileID: 21300000, guid: 31c3006f8d86833479824c57f1392a0c, type: 3}
   - {fileID: 21300000, guid: dfd58e6fd85d28b4388da618e73fa275, type: 3}
   - {fileID: 21300000, guid: 6eba822d81c3b85448df3e5e5cf28418, type: 3}
   - {fileID: 21300000, guid: 8a8f3b92673c9794ca9e62590b11c834, type: 3}
   - {fileID: 21300000, guid: 64bf46ddc2e35e544a1ba04390ee221f, type: 3}
-  mediumAsteroids:
-  - {fileID: 21300000, guid: 6f5a6644de8f3cc48aead1026bab2fc8, type: 3}
-  - {fileID: 21300000, guid: f75c488741b903743babd925bbef2014, type: 3}
   - {fileID: 21300000, guid: c59252e6ebcdc1e459a5109fb7129904, type: 3}
   - {fileID: 21300000, guid: c2634cddeb798f246b444060daf2ba25, type: 3}
-  smallAsteroids:
-  - {fileID: 21300000, guid: 095b9a9c459a0de43993b72e2280af5e, type: 3}
-  - {fileID: 21300000, guid: 72a0f7ec4f2b20b4fa019ee19c41a706, type: 3}
   - {fileID: 21300000, guid: 9627c551de1759c469162c7034b1ab0b, type: 3}
   - {fileID: 21300000, guid: b1d12228c6303a642afb87a9ef813358, type: 3}
-  tinyAsteroids:
-  - {fileID: 21300000, guid: 9bf2f3abb6b093b4baf37b9574610c79, type: 3}
-  - {fileID: 21300000, guid: 31c3006f8d86833479824c57f1392a0c, type: 3}
   - {fileID: 21300000, guid: 0c3cbad090558d948ae1413c4c54c9fb, type: 3}
   - {fileID: 21300000, guid: aacb801081c77894a8e8db9ce23a7fcb, type: 3}
