@@ -84,7 +84,7 @@ namespace Scene
 
         private void SetUI()
         {
-            _skinSelectorUI.SetSprites(_assets.playerShips);
+            _skinSelectorUI.SetSprites(ref _assets.playerShips);
             _skinSelectorUI.SetPlayer(_player);
             _skinSelectorUI.Init();
             

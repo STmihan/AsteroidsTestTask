@@ -18,7 +18,7 @@ namespace UI
 
         public void SetPlayer(Player player) => _player = player;
 
-        public void SetSprites(Sprite[] sprites)
+        public void SetSprites(ref Sprite[] sprites)
         {
             _skins = sprites;
             _skinCounts = sprites.Length;
