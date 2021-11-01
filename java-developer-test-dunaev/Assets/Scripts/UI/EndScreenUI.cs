@@ -14,10 +14,10 @@ namespace UI
         private Canvas _canvas;
         
         private Player _player;
-        public void SetPlayer(Player player) => _player = player;
 
-        public void Init()
+        public void Start()
         {
+            _player = FindObjectOfType<Player>();
             _canvas = GetComponent<Canvas>();
             _canvas.enabled = false;
             _player.ScoreUp += () => _text.SetText(

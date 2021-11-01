@@ -1,22 +1,14 @@
-﻿using Units;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace UI
 {
     public class SkinSelectorUI : MonoBehaviour
     {
-        [SerializeField] private Button _nextButton;
-        [SerializeField] private Button _prevButton;
-        [SerializeField] private Button _playButton;
+        public Canvas Canvas { get; private set; }
 
-
-        public void Init(UnityAction nextSkinAction, UnityAction prevSkinAction, UnityAction playAction)
+        private void Awake()
         {
-            _nextButton.onClick.AddListener(nextSkinAction);
-            _prevButton.onClick.AddListener(prevSkinAction);
-            _playButton.onClick.AddListener(playAction);
+            Canvas = GetComponent<Canvas>();
         }
     }
 }

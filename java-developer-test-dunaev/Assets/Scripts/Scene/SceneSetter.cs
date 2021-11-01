@@ -1,4 +1,5 @@
 ﻿using Settings;
+using UI;
 using Units;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Scene
     {
         [SerializeField] private Player _player;
         
-        private void Start()
+        private void Awake()
         {
             var backgroundSetter = new BackgroundSetter();
             backgroundSetter.SetBackground();
@@ -18,16 +19,19 @@ namespace Scene
             _player = playerFabric.GetPlayer();
 
             var asteroidSetter = new AsteroidFabric(_player);
-            
-            PlayCallback();
 
-            // var ui = new UI.UI(_player) { PlayCallback = PlayCallback };
+            var ui = new UI.UI();
+            ui.SetBindings(Play, playerFabric);
 
-            void PlayCallback()
+            void Play()
             {
-                for (int i = 0; i < GameSettings.Settings.AsteroidsCount; i++) asteroidSetter.SpawnAsteroid(new Vector2(3, 2));
-                _player.CanBeControl = true;
-                _player.SetCollider();
+                for (int i = 0; i < GameSettings.Settings.AsteroidsCount; i++)
+                {
+                    asteroidSetter.SpawnAsteroid(new Vector2(3,3));
+                    _player.CanBeControl = true;
+                    FindObjectOfType<SkinSelectorUI>().Canvas.enabled = false;
+                    _player.SetCollider();
+                }
             }
         }
     }
