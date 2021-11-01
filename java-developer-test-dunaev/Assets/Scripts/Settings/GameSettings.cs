@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Units;
 using UnityEngine;
 
 namespace Settings
@@ -14,7 +13,7 @@ namespace Settings
         static GameSettings()
         {
             var json = "";
-            using (StreamReader reader = new StreamReader(Application.dataPath + "/save.json"))
+            using (StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/Settings.json"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null) json += line;

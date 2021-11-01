@@ -13,7 +13,7 @@ namespace Units
 
         public AsteroidFabric(Player player)
         {
-            var sprites = Resources.LoadAll<Sprite>("Sprites/Asteroids");
+            var sprites = Resources.LoadAll<Sprite>("Asteroids");
             
             foreach (var sprite in sprites)
                 _sprites?.Add(sprite);
