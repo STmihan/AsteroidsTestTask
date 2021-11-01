@@ -1,24 +1,19 @@
 ﻿using Units;
-using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace UI
 {
     public class UI
     {
-        private Player _player;
-        private SkinSelectorUI _skinSelectorUI;
-        public UnityAction PlayCallback;
-
-        public UI(Player player)
+        public void SetBindings(UnityAction playAction, PlayerFabric playerFabric)
         {
-            _player = player;
-        }
+            Object.FindObjectOfType<PlayButton>().GetComponent<Button>().onClick.AddListener(playAction);
+            Object.FindObjectOfType<NextSkinButton>().GetComponent<Button>().onClick.AddListener(playerFabric.NextSkin);
+            Object.FindObjectOfType<PrevSkinButton>().GetComponent<Button>().onClick.AddListener(playerFabric.PrevSkin);
 
-        public void Init()
-        {
-            _skinSelectorUI = Object.FindObjectOfType<SkinSelectorUI>();
-            // _skinSelectorUI.Init();
+            playerFabric.GetPlayer().ScoreUp += () => Object.FindObjectOfType<ScoreText>().Change?.Invoke(playerFabric.GetPlayer().Score);
         }
     }
 }

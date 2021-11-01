@@ -6,12 +6,6 @@ using UnityEngine;
 
 namespace Units
 {
-    public enum PlayerControlType
-    {
-        Physics,
-        NoPhysics
-    }
-    
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
     public class Player : MonoBehaviour
@@ -28,8 +22,6 @@ namespace Units
 
         public int Score { get; private set; }
         
-        private PlayerControlType _controlType;
-
         private int _hp;
         private float _speed;
         private bool _isTakenHitRecently;
@@ -44,7 +36,6 @@ namespace Units
         public void SetSettings()
         {
             _hp = GameSettings.Settings.PlayerHp;
-            _controlType = PlayerControlType.Physics;
             _speed = GameSettings.Settings.PlayerSpeed;
             _invincibility = GameSettings.Settings.PlayerInvincibilityTime;
         }
@@ -93,23 +84,9 @@ namespace Units
         public void Move(Vector2 input)
         {
             if(!CanBeControl) return;
-            switch (_controlType)
-            {
-                case PlayerControlType.Physics:
-                    MovePhysics(input);
-                    break;
-                case PlayerControlType.NoPhysics:
-                    MoveNoPhysics(input);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            _rigidbody.AddRelativeForce(input * _speed);
         }
         
-        private void MoveNoPhysics(Vector2 input) => transform.Translate(input * _speed * Time.fixedDeltaTime);
-
-        private void MovePhysics(Vector2 input) => _rigidbody.AddRelativeForce(input * _speed);
-
         public void Rotate(Vector2 input)
         {
             if(!CanBeControl) return;
