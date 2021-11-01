@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Scene;
-using SO;
+using Settings;
 using UnityEngine;
 
 namespace Units
@@ -17,41 +17,40 @@ namespace Units
     public class Player : MonoBehaviour
     {
         [SerializeField] private Transform _firePoint;
+        [SerializeField] private Bullet _bullet;
+        [SerializeField] private VFX _playerDeathVFX;
+        
+        public Action ScoreUp;
+        public Action OnDeath;
+        public Action Fire;
         
         public bool CanBeControl { get; set; }
 
-        public Action ScoreUp;
-        public Action OnDeath;
-
         public int Score { get; private set; }
-        public PlayerControlType ControlType { get; private set; }
+        
+        private PlayerControlType _controlType;
 
         private int _hp;
         private float _speed;
-        private float _bulletSpeed;
         private bool _isTakenHitRecently;
-        
-        private Bullet _bullet;
-        private VFX _bulletVFX;
-        private VFX _playerDeathVFX;
+        private float _invincibility;
 
-        public SceneBorders Borders { private get; set; }
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _rigidbody;
 
         public void SetPlayerSprite(Sprite sprite) => _spriteRenderer.sprite = sprite;
         public void SetCollider() => gameObject.AddComponent<PolygonCollider2D>().isTrigger = true;
-        public void SetBullet(Bullet bullet)
+        public void SetSettings()
         {
-            _bullet = bullet;
+            _hp = GameSettings.Settings.PlayerHp;
+            _controlType = PlayerControlType.Physics;
+            _speed = GameSettings.Settings.PlayerSpeed;
+            _invincibility = GameSettings.Settings.PlayerInvincibilityTime;
         }
 
-        public void SetVFX(VFX bulletVfx, VFX playerDeathVfx)
-        {
-            _bulletVFX = bulletVfx;
-            _playerDeathVFX = playerDeathVfx;
-        }
+        public Bullet GetBulletPrefab() => _bullet;
+        public Vector3 GetFirePointPosition() => _firePoint.transform.position;
 
         private void Awake()
         {
@@ -69,50 +68,47 @@ namespace Units
             ScoreUp += () => ++Score;
         }
 
-        public void SetSettings(GameSettings settings)
-        {
-            _hp = settings.playerHp;
-            ControlType = settings.playerControlType;
-            _speed = settings.playerSpeed;
-            _bulletSpeed = settings.bulletSpeed;
-        }
-
-        private void Update()
-        {
-            ScreenWrap();
-        }
+        private void Update() => ScreenWrap();
 
         public void TakeHit()
         {
             if(_isTakenHitRecently) return;
             if(--_hp<=0) OnDeath?.Invoke();
-            else StartCoroutine(TakeHitGfx());
+            else StartCoroutine(StartInvincibility());
         }
 
-        private IEnumerator TakeHitGfx()
+        private IEnumerator StartInvincibility()
         {
             _isTakenHitRecently = true;
             for (int i = 0; i < 2; i++)
             {
                 _spriteRenderer.color = new Color(1,1,1,0.5f);
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(_invincibility/4);
                 _spriteRenderer.color = new Color(1,1,1,1);
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(_invincibility/4);
             }
             _isTakenHitRecently = false;
         }
-        
+
         public void Move(Vector2 input)
         {
             if(!CanBeControl) return;
-            transform.Translate(input * _speed * Time.fixedDeltaTime);
+            switch (_controlType)
+            {
+                case PlayerControlType.Physics:
+                    MovePhysics(input);
+                    break;
+                case PlayerControlType.NoPhysics:
+                    MoveNoPhysics(input);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
+        
+        private void MoveNoPhysics(Vector2 input) => transform.Translate(input * _speed * Time.fixedDeltaTime);
 
-        public void MovePhysics(Vector2 input)
-        {
-            if(!CanBeControl) return;
-            _rigidbody.AddRelativeForce(input * _speed);
-        }
+        private void MovePhysics(Vector2 input) => _rigidbody.AddRelativeForce(input * _speed);
 
         public void Rotate(Vector2 input)
         {
@@ -125,23 +121,17 @@ namespace Units
         public void Shoot()
         {
             if(!CanBeControl) return;
-            var bullet = Instantiate(_bullet);
-            bullet.transform.position = _firePoint.position;
-            Vector2 direction = (Vector2)_firePoint.position - (Vector2)transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-            bullet.transform.rotation = Quaternion.Euler(0,0,angle);
-            bullet.Fire(_bulletSpeed, _bulletVFX);
+            Fire?.Invoke();
         }
         
         private void ScreenWrap()
         {
             Vector2 pos = transform.position;
-            if (transform.position.y > Borders.Border.y) pos.y = -Borders.Border.y;
-            if (transform.position.y < -Borders.Border.y) pos.y = Borders.Border.y;
-            if (transform.position.x > Borders.Border.x) pos.x = -Borders.Border.x;
-            if (transform.position.x < -Borders.Border.x) pos.x = Borders.Border.x;
+            if (transform.position.y > SceneBorders.Border.y) pos.y = -SceneBorders.Border.y;
+            if (transform.position.y < -SceneBorders.Border.y) pos.y = SceneBorders.Border.y;
+            if (transform.position.x > SceneBorders.Border.x) pos.x = -SceneBorders.Border.x;
+            if (transform.position.x < -SceneBorders.Border.x) pos.x = SceneBorders.Border.x;
             transform.position = pos;
         }
-
     }
 }

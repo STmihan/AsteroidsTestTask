@@ -1,18 +1,20 @@
 ﻿using System.Collections;
+using Settings;
 using UnityEngine;
 
 namespace Units
 {
     public class Bullet : MonoBehaviour
     {
-        private VFX _vfx;
+        [SerializeField] private VFX _vfx;
+        private Player _player;
         private float _speed;
-        public void Fire(float bulletSpeed, VFX vfx)
+        public void Fire(in Player player)
         {
-            _speed = bulletSpeed;
-            _vfx = vfx;
+            _speed = GameSettings.Settings.BulletSpeed;
             StartCoroutine(MoveRoutine());
             Destroy(gameObject, 2f);
+            _player = player;
         }
 
         private IEnumerator MoveRoutine()
@@ -26,7 +28,9 @@ namespace Units
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.GetComponent<Asteroid>()) Instantiate(_vfx, transform.position, transform.rotation);
+            if (!other.gameObject.GetComponent<Asteroid>()) return;
+            Instantiate(_vfx, transform.position, transform.rotation);
+            _player.ScoreUp?.Invoke();
         }
     }
 }

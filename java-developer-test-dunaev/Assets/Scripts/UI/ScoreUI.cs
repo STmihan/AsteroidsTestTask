@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class ScoreUI : MonoBehaviour, IScreen
+    public class ScoreUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _text;
         
