@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace UI
 {
-    public class EndScreenUI : MonoBehaviour, IScreen
+    public class EndScreenUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private float _waitBeforeShow;

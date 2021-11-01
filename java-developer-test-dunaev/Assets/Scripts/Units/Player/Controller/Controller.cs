@@ -15,34 +15,17 @@ namespace Units
         {
             Shoot();
             if(Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
-        }
-
-        private void FixedUpdate()
-        {
-            Move();
             Rotate();
         }
+
+        private void FixedUpdate() => Move();
 
         private void Shoot()
         {
             if (Input.GetMouseButtonDown(0)) _player.Shoot();
         }
         
-        private void Move()
-        {
-            var input = new Vector2(Input.GetAxis("Horizontal"), Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1));
-            switch (_player.ControlType)
-            {
-                case PlayerControlType.Physics:
-                    _player.MovePhysics(input);
-                    break;
-                case PlayerControlType.NoPhysics:
-                    _player.Move(input);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        private void Move() => _player.Move(new Vector2(Input.GetAxis("Horizontal"), Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1)));
 
         private void Rotate() => _player.Rotate(_camera.ScreenToWorldPoint(Input.mousePosition));
     }

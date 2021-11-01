@@ -396,7 +396,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96500890}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -1147,6 +1147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1647174564}
   - component: {fileID: 1647174565}
+  - component: {fileID: 1647174566}
   m_Layer: 0
   m_Name: SceneSetter
   m_TagString: Untagged
@@ -1180,12 +1181,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921ccdd960b8c664181d33bbea88ae4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _backgroundTilesParent: {fileID: 1569789091}
-  _skinSelectorUI: {fileID: 96500894}
-  _scoreUI: {fileID: 12217252}
-  _endScreenUI: {fileID: 1907205780}
-  _assets: {fileID: 11400000, guid: bae840d6fe1dae54985eb6a2c3b431fc, type: 2}
-  _settings: {fileID: 11400000, guid: c271a107a68530241af7fd74623e7b2d, type: 2}
+  _player: {fileID: -1051910552746893235, guid: 6c9b6ee034420e24a80e6f0d94c6d3b1,
+    type: 3}
+--- !u!114 &1647174566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647174563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b117956a79ff45e89ff3a4e70f0e86ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1754521327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,10 +1517,10 @@ Canvas:
   m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
+  m_OverridePixelPerfect: 1
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
