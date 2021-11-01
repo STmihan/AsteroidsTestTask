@@ -1,0 +1,8 @@
+{
+    "AsteroidsCount": 4,
+    "AsteroidsSpeed": 3.0,
+    "PlayerHp": 2,
+    "PlayerSpeed": 2.0,
+    "BulletSpeed": 10.0,
+    "PlayerInvincibilityTime": 1.0
+}

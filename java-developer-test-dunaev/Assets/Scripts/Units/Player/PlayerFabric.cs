@@ -18,7 +18,7 @@ namespace Units
             _spriteNumber = 0;
             _player = player;
 
-            var sprites = Resources.LoadAll<Sprite>("Sprites/Ships");
+            var sprites = Resources.LoadAll<Sprite>("Ships");
             foreach (var sprite in sprites)
                 _sprites?.Add(sprite);
             if (_sprites == null) throw new ArgumentNullException();

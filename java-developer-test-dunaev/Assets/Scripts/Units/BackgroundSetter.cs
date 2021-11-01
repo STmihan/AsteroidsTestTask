@@ -10,7 +10,7 @@ namespace Units
 
         public BackgroundSetter()
         {
-            var sprites = Resources.LoadAll<Sprite>("Sprites/Backgrounds");
+            var sprites = Resources.LoadAll<Sprite>("Backgrounds");
             _sprite = sprites[Random.Range(0, sprites.Length)];
             _transform = new GameObject("Background").transform;
         }
